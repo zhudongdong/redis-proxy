@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataNodes>
+	<dataNode id="0" host="a" range="[0-4095]">
+	</dataNode>
+	<dataNode id="3" host="a" range="[4096-8191]">
+	</dataNode>
+	<!-- <dataNode id="0" host="a" range="[0-16383]"> -->
+	<!-- </dataNode> -->
+	<dataNode id="1" host="b" range="[8192-16383]">
+	</dataNode>
+
+
+	<!-- <dataNode id="1" host="b"> -->
+	<!-- </dataNode> -->
+	<!-- <dataNode id="2" host="a"> -->
+	<!-- </dataNode> -->
+	<!-- <dataNode id="3" host="b"> -->
+	<!-- </dataNode> -->
+	<!-- <dataNode id="4" host="a"> -->
+	<!-- </dataNode> -->
+	<!-- <dataNode id="5" host="b"> -->
+	<!-- </dataNode> -->
+	<host name="a" maxIdle="200" maxTotal="300" minIdle="100"
+		strategy="writeOnly">
+		<writeHost host="172.31.22.84" port="6379" />
+	</host>
+	<host name="b" maxIdle="200" maxTotal="300" minIdle="100"
+		strategy="writeOnly">
+		<writeHost host="172.31.22.85" port="6380" />
+	</host>
+	<!-- <host name="c"> -->
+	<!-- <writeHost host="localhost" port="6666" /> -->
+	<!-- </host> -->
+	<!-- <host name="d"> -->
+	<!-- <writeHost host="localhost" port="7777" /> -->
+	<!-- </host> -->
+	<!-- <host name="e"> -->
+	<!-- <writeHost host="localhost" port="8888" /> -->
+	<!-- </host> -->
+	<!-- <host name="f"> -->
+	<!-- <writeHost host="localhost" port="9999" /> -->
+	<!-- </host> -->
+</dataNodes>

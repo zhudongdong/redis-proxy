@@ -1,0 +1,430 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.github.redis.proxy</groupId>
+	<artifactId>proxy.proxy</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>proxy.server</module>
+		<module>proxy.test</module>
+		<module>proxy.route</module>
+		<module>proxy.client</module>
+	</modules>
+	<properties>
+		<!--相关模块版本 -->
+		<proxy.version>0.1-SNAPSHOT</proxy.version>
+
+		<maven.test.skip>true</maven.test.skip>
+		<mainClass>not-exists</mainClass>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.7</java.version>
+
+
+		<!--依赖版本配置 -->
+		<c3p0.version>0.9.5-pre8</c3p0.version>
+		<gson.version>2.3</gson.version>
+		<guava.version>18.0</guava.version>
+		<guice.version>4.0-beta</guice.version>
+		<hibernate.version>4.3.5.Final</hibernate.version>
+		<jetty.version>9.3.0.M0</jetty.version>
+		<joda-time.version>2.3</joda-time.version>
+		<jodd.version>3.5.2</jodd.version>
+		<junit.version>4.11</junit.version>
+		<logback.version>1.1.2</logback.version>
+		<lombok.version>1.14.6</lombok.version>
+		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+		<mybatis.version>3.2.8</mybatis.version>
+		<mysql-connector.version>5.1.32</mysql-connector.version>
+		<ormlite-core.version>4.48</ormlite-core.version>
+		<querydsl.version>3.3.4</querydsl.version>
+		<servlet-api.version>3.0.1</servlet-api.version>
+		<slf4j.version>1.7.7</slf4j.version>
+		<spring.version>4.0.3.RELEASE</spring.version>
+		<spring-boot-starter.version>1.0.2.RELEASE</spring-boot-starter.version>
+		<spring-data-jpa.version>1.5.2.RELEASE</spring-data-jpa.version>
+		<jedis.version>2.6.0</jedis.version>
+		<pdfbox.version>1.8.5</pdfbox.version>
+		<jsr305.version>3.0.0</jsr305.version>
+		<commons-httpclient.version>3.1</commons-httpclient.version>
+		<cxf.version>3.0.1</cxf.version>
+		<httpclient.version>4.3.4</httpclient.version>
+		<h2.version>1.4.181</h2.version>
+		<commons-pool2.version>2.2</commons-pool2.version>
+		<kryo.version>2.24.0</kryo.version>
+		<fdb-sql-parser.version>1.5.0</fdb-sql-parser.version>
+		<log4j.version>1.2.17</log4j.version>
+		<ehcache-core.version>2.6.6</ehcache-core.version>
+		<mapdb.version>0.9.8</mapdb.version>
+		<commons-io.version>2.4</commons-io.version>
+		<dubbo.version>2.4.9</dubbo.version>
+		<zookeeper.version>3.4.6</zookeeper.version>
+		<zkclient.version>0.1</zkclient.version>
+		<jersey.version>2.13</jersey.version>
+		<jackson.version>2.4.3</jackson.version>
+		<alogic.version>1.6.1-SNAPSHOT</alogic.version>
+		<netty.version>4.0.10.Final</netty.version>
+		<commons-digester.version>2.1</commons-digester.version>
+		<dom4j.version>1.6.1</dom4j.version>
+		<curator.version>2.7.0</curator.version>
+		<fastjson.version>1.2.5</fastjson.version>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>${mainClass}</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<configuration>
+					<outputDirectory>${out-dir}/lib</outputDirectory>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-shade-plugin</artifactId>
+				<configuration>
+					<!-- put your configurations here -->
+					<outputDirectory>${out-dir}/shade</outputDirectory>
+				</configuration>
+				<executions>
+					<!--<execution> -->
+					<!--<phase>package</phase> -->
+					<!--<goals> -->
+					<!--<goal>shade</goal> -->
+					<!--</goals> -->
+					<!--</execution> -->
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<outputDirectory>${out-dir}/jar</outputDirectory>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+							<goal>test-jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+					<outputDirectory>${out-dir}/source</outputDirectory>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>2.9</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>2.3</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>2.9</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.10.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>dom4j</groupId>
+				<artifactId>dom4j</artifactId>
+				<version>${dom4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-digester</groupId>
+				<artifactId>commons-digester</artifactId>
+				<version>${commons-digester.version}</version>
+			</dependency>
+
+			<!--其它依赖 -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.3.2</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.foundationdb</groupId>
+				<artifactId>fdb-sql-parser</artifactId>
+				<version>${fdb-sql-parser.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>${h2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-all</artifactId>
+				<version>${netty.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>redis.embedded</groupId>
+				<artifactId>embedded-redis</artifactId>
+				<version>0.3</version>
+				<exclusions>
+					<exclusion>
+						<groupId>com.google.guava</groupId>
+						<artifactId>guava-io</artifactId>
+					</exclusion>
+				</exclusions>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.mchange</groupId>
+				<artifactId>c3p0</artifactId>
+				<version>${c3p0.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.github.alogic</groupId>
+				<artifactId>alogic-core</artifactId>
+				<version>${alogic.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.alogic</groupId>
+				<artifactId>alogic-ketty-server</artifactId>
+				<version>1.1.6</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-pool2</artifactId>
+				<version>${commons-pool2.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>${gson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.glassfish.jersey.core</groupId>
+				<artifactId>jersey-server</artifactId>
+				<version>${jersey.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.glassfish.jersey.containers</groupId>
+				<artifactId>jersey-container-jetty-servlet</artifactId>
+				<version>${jersey.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>jetty-util</artifactId>
+						<groupId>org.eclipse.jetty</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>jetty-server</artifactId>
+						<groupId>org.eclipse.jetty</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>jetty-continuation</artifactId>
+						<groupId>org.eclipse.jetty</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-continuation</artifactId>
+				<version>9.3.0.M0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-server</artifactId>
+				<version>${jetty.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.code.findbugs</groupId>
+				<artifactId>jsr305</artifactId>
+				<version>${jsr305.version}</version>
+				<optional>true</optional>
+			</dependency>
+
+			<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+				<version>${jedis.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.esotericsoftware.kryo</groupId>
+				<artifactId>kryo</artifactId>
+				<version>${kryo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql-connector.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.zookeeper</groupId>
+				<artifactId>zookeeper</artifactId>
+				<version>${zookeeper.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-recipes</artifactId>
+				<version>${curator.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+</project>

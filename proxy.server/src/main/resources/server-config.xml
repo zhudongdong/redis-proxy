@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server port="6666" configType="local" configLocation="/proxy-config.xml">
+</server>
+<!-- <server port="6666" configType="zookeeper" configLocation="localhost:2181"> -->
+<!-- </server> -->
